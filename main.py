@@ -1,5 +1,7 @@
 from PIL import Image
 import math
+import random
+from html_page_template import HTML_TEMPLATE
 
 ### FUNCTIONS ###
 def convert_to_2d_array(input_list, row_size):
@@ -15,10 +17,26 @@ def calculate_correction(photo_width, row_size):
     correction_rate = (photo_width / row_size) % 1
     return correction_rate * MAX_CORRECTION_VALUE
 
+def return_span_tag(rgb_color, char):
+    return f'<span style="color:rgb({",".join(str(e) for e in rgb_color)})">{char}</span>'
+
+def char_generator(string):
+    while True:
+        for char in string:
+            yield char
+
+def return_random_char_from_string(string):
+    return random.choice(string)
 ### SETTINGS ###
 # SETUP
-ROW_SIZE = 25
-TEXT_STRING = "#"
+ROW_SIZE = 50
+TEXT_STRING = "10"
+CHAR_MODE = "random_characters"  # mode 1
+# CHAR_MODE = "next_characters"  # mode 2
+
+COLOR_MODE = "rgb"  # mode 1
+# COLOR_MODE = "gray_scale"  # mode 2
+
 image = Image.open("MonaLisa.jpg")
 
 img_width = image.width
@@ -61,8 +79,28 @@ for x in range(COLUMN_SIZE):
 ### PRINT & DATA INTERPRETATION ###
 # CREATE PIXELATED IMAGE
 new_image = Image.new(mode="RGB", size=(ROW_SIZE, COLUMN_SIZE))
+# if COLOR_MODE == "rgb":
+#     pass
+# elif COLOR_MODE == "gray_scale":
+#     pass
 new_image.putdata(average_rgb_values_2d_list)
-new_image.save('test.png')
+new_image.save('pixelated_photo.png')
 
 # CREATE HTML FILE
+styled_spans = ""
+char_gen = char_generator(TEXT_STRING)
+with open("pixelated_photo.html", "w") as file:
+    current_char = None
+    for i in range(1, ROW_SIZE * COLUMN_SIZE):
+        if CHAR_MODE == "next_characters":
+            current_char = next(char_gen)
+        elif CHAR_MODE == "random_characters":
+            current_char = return_random_char_from_string(TEXT_STRING)
+
+        styled_spans += return_span_tag(average_rgb_values_2d_list[i], current_char)
+
+        if i % ROW_SIZE == 0 and i != 0:
+            styled_spans += "\n"
+
+    file.write(HTML_TEMPLATE.format(styled_spans))
 
