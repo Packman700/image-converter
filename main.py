@@ -53,6 +53,7 @@ COLOR_CORRECTION = calculate_correction(img_width, ROW_SIZE)
 CHAR_PIXEL_FIELD = char_pixel_size**2 - COLOR_CORRECTION  # alis number of pixels
 
 ### MAIN LOGIC ###
+# FILL average_rgb_values_2d_list
 for x in range(COLUMN_SIZE):
     x_start_index = math.floor(x * char_pixel_size)
     rows = img_rgb_2d_list[x_start_index: math.floor(x_start_index + char_pixel_size)]
@@ -75,14 +76,15 @@ for x in range(COLUMN_SIZE):
 
         average_rgb_values_2d_list.append(char_color)
 
+# CHANGE COLOR MODE
+if COLOR_MODE == "rgb":
+    pass
+elif COLOR_MODE == "gray_scale":
+    average_rgb_values_2d_list = list(map(lambda rgb: (max(rgb), max(rgb), max(rgb)), average_rgb_values_2d_list))
 
 ### PRINT & DATA INTERPRETATION ###
 # CREATE PIXELATED IMAGE
 new_image = Image.new(mode="RGB", size=(ROW_SIZE, COLUMN_SIZE))
-# if COLOR_MODE == "rgb":
-#     pass
-# elif COLOR_MODE == "gray_scale":
-#     pass
 new_image.putdata(average_rgb_values_2d_list)
 new_image.save('pixelated_photo.png')
 
