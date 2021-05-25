@@ -1,10 +1,7 @@
 HTML_TEMPLATE = """
 <head>
-    <style>
-
-    </style>
 </head>
-<body>
+<body style="background-color:rgb(10,10,10);">
     <pre style="background-color:rgb(10,10,10); 
                 width:fit-content;
                 line-height: 80%">
