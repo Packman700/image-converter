@@ -2,7 +2,7 @@ def set_row_size(image_width):
     while True:
         try:
             ROW_SIZE = float(input(f"Chose row size (value between 1 to {image_width}: "))
-        except ValueError:
+        except (TypeError, ValueError):
             print("You must write number")
             continue
 

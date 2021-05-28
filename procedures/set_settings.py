@@ -2,8 +2,11 @@ import os
 from PIL import Image
 from functions.set_settings.chose_image import *
 from functions.set_settings.set_row_size import *
+from functions.set_settings.set_asci_shift import *
 from functions.set_settings.select_char_mode import *
 from functions.set_settings.select_action import *
+from functions.set_settings.select_asci_mode import *
+from functions.set_settings.select_color_mode import *
 from functions.set_settings.text_string import *
 
 def set_settings():
@@ -14,28 +17,19 @@ def set_settings():
     ASCI_SHIFT = None
 
     PHOTO_NAME = chose_image()
-    ROW_SIZE = set_row_size(Image.open(PHOTO_NAME).width)
+    image = Image.open(PHOTO_NAME)
+
+    ROW_SIZE = set_row_size(image.width)
     ACTION = select_action()
 
     if ACTION == "generate_HTML_file":
         CHAR_MODE = select_char_mode()
         TEXT_STRING = text_string(CHAR_MODE)
         if CHAR_MODE == "asci_characters":
-            # ASCI_BRIGHT_MODE = "70_grey_level"
-            ASCI_BRIGHT_MODE = "10_grey_level"
+            ASCI_BRIGHT_MODE = select_asci_mode()
+            ASCI_SHIFT = set_asci_shift(ASCI_BRIGHT_MODE)
 
-            ASCI_SHIFT = 0  # limit to 10 and 70
-
-
-    COLOR_MODE = "rgb"  # mode 1
-    # COLOR_MODE = "gray_scale"  # mode 2
-
-    # TODO color mode one color
-    # COLOR_MODE = "one_color"  # NOT WORKING mode only for asci_character
-    # COLOR = "#ffffff" # NOT WORKING
-
-
-    image = Image.open(PHOTO_NAME)
+    COLOR_MODE = select_color_mode()
 
     COLUMN_SIZE = round((image.height * ROW_SIZE) / image.width)  # cross multiplication
 

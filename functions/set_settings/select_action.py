@@ -1,4 +1,4 @@
-MENU = """     SELECT MODE
+MENU = """    SELECT ACTION
 ---------------------
 1. Generate HTML file
 2. Pixelated image
