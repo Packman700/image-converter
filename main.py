@@ -19,7 +19,7 @@ average_rgb_values_2d_list = change_color_mode(average_rgb_values_2d_list, SETTI
 
 # CREATE FILE
 
-if SETTINGS["ACTON"] == "pixelated_image":
+if SETTINGS["ACTION"] == "pixelated_image":
     generate_img_file(average_rgb_values_2d_list, SETTINGS)
-elif SETTINGS["ACTON"] == "generate_HTML_file":
+elif SETTINGS["ACTION"] == "generate_HTML_file":
     generate_HTML_file(average_rgb_values_2d_list, SETTINGS)

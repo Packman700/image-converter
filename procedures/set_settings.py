@@ -1,24 +1,31 @@
 import os
 from PIL import Image
 from functions.set_settings.chose_image import *
+from functions.set_settings.set_row_size import *
+from functions.set_settings.select_char_mode import *
+from functions.set_settings.select_action import *
+from functions.set_settings.text_string import *
 
 def set_settings():
+    # Declaration all optional arguments
+    CHAR_MODE = None
+    TEXT_STRING = None
+    ASCI_BRIGHT_MODE = None
+    ASCI_SHIFT = None
+
     PHOTO_NAME = chose_image()
-    # SETUP
-    ROW_SIZE = 70
-    TEXT_STRING = "MONA-LISA-"
+    ROW_SIZE = set_row_size(Image.open(PHOTO_NAME).width)
+    ACTION = select_action()
 
-    ACTON = "generate_HTML_file"
-    # ACTON = "pixelated_image"
+    if ACTION == "generate_HTML_file":
+        CHAR_MODE = select_char_mode()
+        TEXT_STRING = text_string(CHAR_MODE)
+        if CHAR_MODE == "asci_characters":
+            # ASCI_BRIGHT_MODE = "70_grey_level"
+            ASCI_BRIGHT_MODE = "10_grey_level"
 
-    # CHAR_MODE = "random_characters"  # mode 1
-    # CHAR_MODE = "next_characters"  # mode 2
-    CHAR_MODE = "asci_characters"  # mode 3
+            ASCI_SHIFT = 0  # limit to 10 and 70
 
-    ASCI_SHIFT = 0  # limit to 10 and 70
-
-    # ASCI_BRIGHT_MODE = "70_grey_level"
-    ASCI_BRIGHT_MODE = "10_grey_level"
 
     COLOR_MODE = "rgb"  # mode 1
     # COLOR_MODE = "gray_scale"  # mode 2
@@ -38,7 +45,7 @@ def set_settings():
                 "ROW_SIZE": ROW_SIZE,
                 "COLUMN_SIZE": COLUMN_SIZE,
                 "TEXT_STRING": TEXT_STRING,
-                "ACTON": ACTON,
+                "ACTION": ACTION,
                 "CHAR_MODE": CHAR_MODE,
                 "ASCI_SETTINGS": {
                     "ASCI_SHIFT": ASCI_SHIFT,
