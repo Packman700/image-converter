@@ -22,4 +22,8 @@ def asci_generator(color, ASCI_SETTINGS):
 
     char_index = round(brightest_color/255*len(ASCI_CHARS)) - ASCI_SETTINGS["ASCI_SHIFT"]
 
+    # BUG FIX
+    if char_index == len(ASCI_CHARS):
+        char_index -= 1
+
     return ASCI_CHARS[char_index]

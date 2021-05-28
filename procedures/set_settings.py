@@ -7,6 +7,7 @@ from functions.set_settings.select_char_mode import *
 from functions.set_settings.select_action import *
 from functions.set_settings.select_asci_mode import *
 from functions.set_settings.select_color_mode import *
+from functions.set_settings.select_8_bit_mode import *
 from functions.set_settings.text_string import *
 
 def set_settings():
@@ -15,6 +16,7 @@ def set_settings():
     TEXT_STRING = None
     ASCI_BRIGHT_MODE = None
     ASCI_SHIFT = None
+    EIGHT_BIT_MODE = None
 
     PHOTO_NAME = chose_image()
     image = Image.open(PHOTO_NAME)
@@ -30,6 +32,8 @@ def set_settings():
             ASCI_SHIFT = set_asci_shift(ASCI_BRIGHT_MODE)
 
     COLOR_MODE = select_color_mode()
+    if COLOR_MODE == "8_bit":
+        EIGHT_BIT_MODE = select_8_bit_mode()
 
     COLUMN_SIZE = round((image.height * ROW_SIZE) / image.width)  # cross multiplication
 
@@ -45,8 +49,9 @@ def set_settings():
                     "ASCI_SHIFT": ASCI_SHIFT,
                     "ASCI_BRIGHT_MODE": ASCI_BRIGHT_MODE
                 },
+
                 "COLOR_MODE": COLOR_MODE,
-                # "COLOR": COLOR,
+                "EIGHT_BIT_MODE": EIGHT_BIT_MODE,
                 "PATH": CURRENT_PATH}
 
     return SETTINGS
