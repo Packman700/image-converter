@@ -5,6 +5,7 @@ MENU = """  SELECT 8 BIT MODE
 3. Low blue
 ---------------------"""
 
+
 def select_8_bit_mode():
     while True:
         print(MENU)
@@ -12,11 +13,11 @@ def select_8_bit_mode():
         CHOSE = input('You\'r chose: ').lower().strip()
 
         ACTION = ''
-        if CHOSE == '1' or CHOSE == "low red" or CHOSE == "":
+        if CHOSE in ('1', 'low red', ''):
             ACTION = "low_red"
-        elif CHOSE == '2' or CHOSE == "low green":
+        elif CHOSE in ('2', 'low green'):
             ACTION = "low_green"
-        elif CHOSE == '3' or CHOSE == "low blue":
+        elif CHOSE in ('3', 'low blue'):
             ACTION = "low_blue"
         else:
             print("Wrong option try again")
