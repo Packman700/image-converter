@@ -24,4 +24,4 @@ def change_color_to_8_bit(color, EIGHT_BIT_MODE):
     G = int(round(round(G/ONE_BIT_GREEN) * ONE_BIT_GREEN))
     B = int(round(round(G/ONE_BIT_BLUE) * ONE_BIT_BLUE))
 
-    return [R, G, B]
+    return (R, G, B)
