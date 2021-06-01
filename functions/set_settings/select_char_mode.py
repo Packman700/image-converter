@@ -15,7 +15,7 @@ def select_char_mode():
         CHAR_MODE = ''
         if CHOSE in ('1', 'next characters', ''):
             CHAR_MODE = "next_characters"  # mode 2
-        elif CHOOSE in ('2', 'random characters'):
+        elif CHOSE in ('2', 'random characters'):
             CHAR_MODE = "random_characters"  # mode 1
         elif CHOSE in ('3', 'asci characters'):
             CHAR_MODE = "asci_characters"  # mode 3
