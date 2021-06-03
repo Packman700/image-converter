@@ -1,14 +1,9 @@
-from procedures.generate_file.generate_img_file import *
-from procedures.generate_file.generate_HTML_file import *
 from functions.Settings import Settings
 from MyImage import MyImage
+from procedures.PresentData import PresentData
 
 ### SETTINGS ###
 # SETUP
 settings = Settings()
-myImage = MyImage(settings)
-
-if settings.action == "pixelated_image":
-    generate_img_file(myImage.photo_rgb_list, settings)
-elif settings.action == "generate_HTML_file":
-    generate_HTML_file(myImage.photo_rgb_list, settings)
+my_image = MyImage(settings)
+PresentData(my_image, settings)
