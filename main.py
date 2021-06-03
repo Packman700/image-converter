@@ -1,4 +1,4 @@
-from functions.Settings import Settings
+from procedures.Settings import Settings
 from MyImage import MyImage
 from procedures.PresentData import PresentData
 
