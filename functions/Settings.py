@@ -1,13 +1,14 @@
+import os
 from PIL import Image
 from .SelectMenu import SelectMenu
 
 class Settings:
-    # ALL OPTIONS
-    # IDK THIS IS OBLIGATORY :')
+    # DECLARATION OF ALL OPTIONS
     path = image = row_size = action = char_mode = text_string = asci_bright_mode \
-         = asci_shift = color_mode = eight_bit_color_mode = column_size = None
+         = asci_shift = color_mode = eight_bit_color_mode = column_size = current_path = None
 
     def __init__(self):
+        # List of all possible modes
         ACTION_OPTIONS = ["generate_HTML_file", "pixelated_image"]
         CHAR_OPTIONS = ["next_characters", "random_characters", "asci_characters"]
         ASCI_BRIGHT_OPTIONS = ["10_grey_level", "reverse_10_grey_level", "70_grey_level", "reverse_70_grey_level"]
@@ -15,7 +16,7 @@ class Settings:
         EIGHT_BIT_COLOR_OPTION = ["low_red", "low_green", "low_blue"]
 
         select_menu = SelectMenu()
-        # self._select_blueprint()
+
         self.chose_photo_path()
         self.create_image()
         self.set_row_size()
@@ -28,15 +29,16 @@ class Settings:
             if self.char_mode == "asci_characters":
                 self.asci_bright_mode = select_menu.create_menu("Select ASCI Mode", ASCI_BRIGHT_OPTIONS)
                 self.set_asci_shift()
+
         self.color_mode = select_menu.create_menu("Select Color Mode", COLOR_MODE_OPTIONS)
         if self.color_mode == "8_bit":
             self.eight_bit_color_mode = select_menu.create_menu("Select 8 Bit Color Mode", EIGHT_BIT_COLOR_OPTION)
 
         # IF PROGRAM WILL RETURN STRANGE THINGS RETURN TO THIS VERSION
-        # COLUMN_SIZE = round((self.image.height * self.row_size) / self.image.width)
+        # self.column_size = round((self.image.height * self.row_size) / self.image.width)
         self.column_size = (self.image.height * self.row_size) // self.image.width
 
-        # CURRENT_PATH = os.getcwd()
+        self.current_path = os.getcwd()
 
     def chose_photo_path(self):
         while True:

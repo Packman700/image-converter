@@ -1,7 +1,7 @@
-MonaLisa.jpg
+123.png
 50
 1
 3
-4
+1
 0
 1
