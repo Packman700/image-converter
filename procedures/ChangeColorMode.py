@@ -10,7 +10,8 @@ class ChangeColorMode:
             self.changed_photo_rgb_list = list(
                 map(lambda rgb: self._change_color_to_8_bit(rgb, settings.eight_bit_color_mode),
                     photo_rgb_list))
-        self.changed_photo_rgb_list = photo_rgb_list
+        else:
+            raise Exception("You chose invalid color mode")
 
     @staticmethod
     def _change_color_to_8_bit(color, eight_bit_mode):
