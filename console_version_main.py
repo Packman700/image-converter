@@ -3,7 +3,8 @@ from MyImage import MyImage
 from procedures.PresentData import PresentData
 
 # Set settings
-settings = Settings().text_mode_set_settings()
+settings = Settings()
+settings.text_mode_set_settings()
 # Main logic
 my_image = MyImage(settings)
 # Format and display data

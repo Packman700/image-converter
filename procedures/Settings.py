@@ -4,8 +4,8 @@ from .TextModeSelectMenu import TextModeSelectMenu
 
 class Settings:
     # DECLARATION OF ALL OPTIONS
-    path = image = row_size = action = char_mode = text_string = asci_bright_mode \
-         = asci_shift = color_mode = eight_bit_color_mode = column_size = current_path = None
+    source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
+         = color_mode = eight_bit_color_mode = column_size = output_path = None
 
     def gui_mode_set_settings(self):
         pass
@@ -24,6 +24,7 @@ class Settings:
         self.create_image()
         self.set_row_size()
         self.action = select_menu.create_menu("Select Action", ACTION_OPTIONS)
+        self.chose_output_path()
         if self.action == "generate_HTML_file":
             self.char_mode = select_menu.create_menu("Select Char Mode", CHAR_OPTIONS)
             if self.char_mode in ["random_characters", "next_characters"]:
@@ -41,13 +42,11 @@ class Settings:
         # self.column_size = round((self.image.height * self.row_size) / self.image.width)
         self.column_size = (self.image.height * self.row_size) // self.image.width
 
-        self.current_path = os.getcwd()
-
     def chose_photo_path(self):
         while True:
-            path = input("Write path to photo: ")
+            source_path = input("Write path to photo: ")
             try:
-                img = Image.open(path)
+                img = Image.open(source_path)
                 img.verify()  # I perform also verify, don't know if he sees other types o defects
                 img.close()
             except FileNotFoundError:
@@ -57,11 +56,39 @@ class Settings:
                 print("Selected file isn't image")
                 continue
 
-            self.path = path
+            self.source_path = source_path
+            break
+
+    def chose_output_path(self):
+        LEGAL_PHOTO_EXTENSION = [".png", ".bmp", ".gif", ".jpg", ".jpeg", ".tff", ".tiff", ".eps"]
+        while True:
+
+            path = input("Write output name file or path: ")
+            _ , extension = os.path.splitext(path)
+            dir_name = os.path.dirname(path)
+
+            if self.action == "generate_HTML_file":
+                if extension != ".html":
+                    print("Your file must have .html file extension ")
+                    continue
+            elif self.action == "pixelated_image":
+                if extension not in LEGAL_PHOTO_EXTENSION:
+                    print("Your file must use photo file extension (like .png or .jpg)")
+                    continue
+
+            if not dir_name:
+                self.output_path = path
+                break
+
+            if not os.path.dirname(dir_name):
+                print("Wrong path")
+                continue
+
+            self.output_path = path
             break
 
     def create_image(self):
-        self.image = Image.open(self.path)
+        self.image = Image.open(self.source_path)
 
     def set_row_size(self):
         while True:
