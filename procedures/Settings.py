@@ -1,13 +1,16 @@
 import os
 from PIL import Image
-from .SelectMenu import SelectMenu
+from .TextModeSelectMenu import TextModeSelectMenu
 
 class Settings:
     # DECLARATION OF ALL OPTIONS
     path = image = row_size = action = char_mode = text_string = asci_bright_mode \
          = asci_shift = color_mode = eight_bit_color_mode = column_size = current_path = None
 
-    def __init__(self):
+    def gui_mode_set_settings(self):
+        pass
+
+    def text_mode_set_settings(self):
         # List of all possible modes
         ACTION_OPTIONS = ["generate_HTML_file", "pixelated_image"]
         CHAR_OPTIONS = ["next_characters", "random_characters", "asci_characters"]
@@ -15,7 +18,7 @@ class Settings:
         COLOR_MODE_OPTIONS = ["rgb", "gray_scale", "8_bit"]
         EIGHT_BIT_COLOR_OPTION = ["low_red", "low_green", "low_blue"]
 
-        select_menu = SelectMenu()
+        select_menu = TextModeSelectMenu()
 
         self.chose_photo_path()
         self.create_image()

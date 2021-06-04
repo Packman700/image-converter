@@ -1,4 +1,4 @@
-class SelectMenu:
+class TextModeSelectMenu:
     def __init__(self):
         self.HR_LEN = 18
 
