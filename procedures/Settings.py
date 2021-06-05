@@ -20,11 +20,11 @@ class Settings:
 
         select_menu = TextModeSelectMenu()
 
-        self.chose_photo_path()
+        self.choose_photo_path()
         self.create_image()
         self.set_row_size()
         self.action = select_menu.create_menu("Select Action", ACTION_OPTIONS)
-        self.chose_output_path()
+        self.choose_output_path()
         if self.action == "generate_HTML_file":
             self.char_mode = select_menu.create_menu("Select Char Mode", CHAR_OPTIONS)
             if self.char_mode in ["random_characters", "next_characters"]:
@@ -42,7 +42,7 @@ class Settings:
         # self.column_size = round((self.image.height * self.row_size) / self.image.width)
         self.column_size = (self.image.height * self.row_size) // self.image.width
 
-    def chose_photo_path(self):
+    def choose_photo_path(self):
         while True:
             source_path = input("Write path to photo: ")
             try:
@@ -59,7 +59,7 @@ class Settings:
             self.source_path = source_path
             break
 
-    def chose_output_path(self):
+    def choose_output_path(self):
         LEGAL_PHOTO_EXTENSION = [".png", ".bmp", ".gif", ".jpg", ".jpeg", ".tff", ".tiff", ".eps"]
         while True:
 

@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 
-class SelectPhotoButton(Frame):
+class ChoosePhotoButton(Frame):
     def __init__(self, parent, *kwargs, **args):
         super().__init__(parent, *kwargs, **args)
 

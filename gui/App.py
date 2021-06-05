@@ -1,5 +1,5 @@
 from tkinter import *
-from .SelectPhotoButton import SelectPhotoButton
+from .ChoosePhotoButton import ChoosePhotoButton
 from .SetRowSize import SetRowSize
 
 class App(Frame):
@@ -10,22 +10,22 @@ class App(Frame):
         super().__init__()
         self.pack()
 
-        self.select_photo_button = SelectPhotoButton(self)
-        self.select_photo_button.pack()
-        self.select_photo_button.get().trace("r", self.update_photo_path_callback)
+        self.choose_photo_button = ChoosePhotoButton(self)
+        self.choose_photo_button.pack()
+        self.choose_photo_button.get().trace("r", self.update_photo_path_callback)
 
-        self.slider = SetRowSize(self, self.select_photo_button.get())
-        self.slider.pack()
+        self.set_row_size_spinbox = SetRowSize(self, self.choose_photo_button.get())
+        self.set_row_size_spinbox.pack()
 
         # Just a tests
-        self.test_btn = Button(self, text='test', state=DISABLED, command=lambda : print(self.slider.get()))
+        self.test_btn = Button(self, text='test', state=DISABLED, command=lambda : print(self.set_row_size_spinbox.get()))
         self.test_btn.pack()
 
     def update_photo_path_callback(self, *args):
-        if self.select_photo_button.get_value():
+        if self.choose_photo_button.get_value():
             self.test_btn["state"] = NORMAL
         else:
             self.test_btn["state"] = DISABLED
-        self.source_path = self.select_photo_button.get_value()
+        self.source_path = self.choose_photo_button.get_value()
 
 
