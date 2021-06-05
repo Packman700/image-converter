@@ -1,5 +1,6 @@
 from tkinter import *
 from .SelectPhotoButton import SelectPhotoButton
+from .SetRowSize import SetRowSize
 
 class App(Frame):
     source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
@@ -11,10 +12,13 @@ class App(Frame):
 
         self.select_photo_button = SelectPhotoButton(self)
         self.select_photo_button.pack()
-        self.select_photo_button.get_string_var().trace("r", self.update_photo_path_callback)
+        self.select_photo_button.get().trace("r", self.update_photo_path_callback)
+
+        self.slider = SetRowSize(self, self.select_photo_button.get())
+        self.slider.pack()
 
         # Just a tests
-        self.test_btn = Button(self, text='test', state=DISABLED)
+        self.test_btn = Button(self, text='test', state=DISABLED, command=lambda : print(self.slider.get()))
         self.test_btn.pack()
 
     def update_photo_path_callback(self, *args):

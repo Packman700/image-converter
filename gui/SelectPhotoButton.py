@@ -20,5 +20,5 @@ class SelectPhotoButton(Frame):
     def get_value(self):
         return self.file_name.get()
 
-    def get_string_var(self):
+    def get(self):
         return self.file_name
