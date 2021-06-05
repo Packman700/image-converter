@@ -1,7 +1,6 @@
 from tkinter import *
 from PIL import Image
 
-
 class SetRowSize(Frame):
     def __init__(self, parent, photo_path):
         super().__init__(parent)
@@ -32,22 +31,14 @@ class SetRowSize(Frame):
 
     def validate_input(self, new_value, *args):
         if new_value.isdigit():
-            # Prevention for first char equal 0 in two digit number
-            if len(new_value) > 1 and new_value[0] == '0':
-                self.row_value.set(new_value[1:])
-                # If we don't redefine validate property, this method will not called again ;>
-                self.row_size_spinbox.config(validate="key")
-                return False
-
             # Prevention for type to big number
             if int(new_value) > self.max_value.get():
                 self.row_value.set(self.max_value.get())
                 self.row_size_spinbox.config(validate="key")
                 return False
             return True
-
         elif new_value == "":
-            self.row_value.set(0)
+            self.row_value.set(1)
             self.row_size_spinbox.config(validate="key")
             return False
         else:
