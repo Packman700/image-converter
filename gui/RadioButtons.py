@@ -1,5 +1,4 @@
 from tkinter import *
-from operator import methodcaller
 
 class RadioButtons(Frame):
     def __init__(self, parent, options, text_label, is_enable):
@@ -27,9 +26,11 @@ class RadioButtons(Frame):
     # Listeners
     def is_enable_trace(self, *args):
         for button in self.radio_buttons:
-            print(button)
             button.config(state=(NORMAL if self.is_enable.get() else DISABLED))
 
     # Other
     def get(self):
+        return self.chosen_option
+
+    def get_value(self):
         return self.chosen_option.get()

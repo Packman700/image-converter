@@ -30,7 +30,7 @@ class Settings:
 
         self.color_mode = select_menu.create_menu("Select Color Mode", OPTIONS["COLOR_MODE"])
         if self.color_mode == "8_bit":
-            self.eight_bit_color_mode = select_menu.create_menu("Select 8 Bit Color Mode", OPTIONS["EIGHT_BIT_COLOR"])
+            self.eight_bit_color_mode = select_menu.create_menu("Select 8 Bit Color Mode", OPTIONS["8_BIT_COLOR"])
 
         # IF PROGRAM WILL RETURN STRANGE THINGS RETURN TO THIS VERSION
         # self.column_size = round((self.image.height * self.row_size) / self.image.width)

@@ -19,7 +19,7 @@ OPTIONS = {
         "Gray scale": "gray_scale",
         "8 bit": "8_bit",
     },
-    "EIGHT_BIT_COLOR": {
+    "8_BIT_COLOR": {
         "Low red": "low_red",
         "Low green": "low_green",
         "Low blue": "low_blue"
