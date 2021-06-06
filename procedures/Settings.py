@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 from .TextModeSelectMenu import TextModeSelectMenu
+from options import OPTIONS
 
 class Settings:
     # DECLARATION OF ALL OPTIONS
@@ -11,32 +12,25 @@ class Settings:
         pass
 
     def text_mode_set_settings(self):
-        # List of all possible modes
-        ACTION_OPTIONS = ["generate_HTML_file", "pixelated_image"]
-        CHAR_OPTIONS = ["next_characters", "random_characters", "asci_characters"]
-        ASCI_BRIGHT_OPTIONS = ["10_grey_level", "reverse_10_grey_level", "70_grey_level", "reverse_70_grey_level"]
-        COLOR_MODE_OPTIONS = ["rgb", "gray_scale", "8_bit"]
-        EIGHT_BIT_COLOR_OPTION = ["low_red", "low_green", "low_blue"]
-
         select_menu = TextModeSelectMenu()
 
         self.choose_photo_path()
         self.create_image()
         self.set_row_size()
-        self.action = select_menu.create_menu("Select Action", ACTION_OPTIONS)
+        self.action = select_menu.create_menu("Select Action", OPTIONS["ACTION"])
         self.choose_output_path()
         if self.action == "generate_HTML_file":
-            self.char_mode = select_menu.create_menu("Select Char Mode", CHAR_OPTIONS)
+            self.char_mode = select_menu.create_menu("Select Char Mode", OPTIONS["CHAR_MODE"])
             if self.char_mode in ["random_characters", "next_characters"]:
                 self.text_string = input("Write string with you want to use in picture: ")
 
             if self.char_mode == "asci_characters":
-                self.asci_bright_mode = select_menu.create_menu("Select ASCI Mode", ASCI_BRIGHT_OPTIONS)
+                self.asci_bright_mode = select_menu.create_menu("Select ASCI Mode", OPTIONS["ASCI_BRIGHT"])
                 self.set_asci_shift()
 
-        self.color_mode = select_menu.create_menu("Select Color Mode", COLOR_MODE_OPTIONS)
+        self.color_mode = select_menu.create_menu("Select Color Mode", OPTIONS["COLOR_MODE"])
         if self.color_mode == "8_bit":
-            self.eight_bit_color_mode = select_menu.create_menu("Select 8 Bit Color Mode", EIGHT_BIT_COLOR_OPTION)
+            self.eight_bit_color_mode = select_menu.create_menu("Select 8 Bit Color Mode", OPTIONS["EIGHT_BIT_COLOR"])
 
         # IF PROGRAM WILL RETURN STRANGE THINGS RETURN TO THIS VERSION
         # self.column_size = round((self.image.height * self.row_size) / self.image.width)

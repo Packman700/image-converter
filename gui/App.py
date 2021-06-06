@@ -2,14 +2,11 @@ from tkinter import *
 from .ChoosePhotoButton import ChoosePhotoButton
 from .SetRowSizeSpinbox import SetRowSize
 from .RadioButtons import RadioButtons
-
+from options import OPTIONS
 
 class App(Frame):
-    ACTION_OPTIONS = {"Generate HTML file": "generate_HTML_file",
-                      "Pixelated image": "pixelated_image"}
     source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
         = color_mode = eight_bit_color_mode = column_size = output_path = None
-
 
     def __init__(self, main_logic):
         super().__init__()
@@ -20,7 +17,7 @@ class App(Frame):
 
         # Create widgets
         self.choose_photo_button = ChoosePhotoButton(self)
-        self.select_action_radio_buttons = RadioButtons(self, self.ACTION_OPTIONS, "Select action",
+        self.select_action_radio_buttons = RadioButtons(self, OPTIONS["ACTION"], "Select action",
                                                         self.is_photo_chosen)
         self.set_row_size_spinbox = SetRowSize(self, self.choose_photo_button.get(), self.is_photo_chosen)
 
