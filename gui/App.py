@@ -7,8 +7,8 @@ from .SetTextString import SetTextString
 from PIL import Image
 
 class App(Frame):
-    source_path = image = width_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
-        = color_mode = eight_bit_color_mode = column_size = output_path = None
+    # source_path = image = width_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
+    #     = color_mode = eight_bit_color_mode = column_size = output_path = None
 
     def __init__(self, main_logic):
         super().__init__()
@@ -21,6 +21,7 @@ class App(Frame):
         self.is_asci_char_mode = BooleanVar(None, False)
         self.is_8_bit_mode = BooleanVar(None, False)
         self.width_size = IntVar(None)
+        self.max_asci_shift = IntVar(None)
 
         # Create widgets
         self.choose_photo_button = ChoosePhotoButton(self)
@@ -29,7 +30,7 @@ class App(Frame):
         self.select_char_mode = RadioButtons(self, OPTIONS["CHAR_MODE"], "Select char mode", self.is_html_mode)
         self.set_text_string = SetTextString(self, "Entry text: ", self.is_need_text_string)
         self.select_asci_mode = RadioButtons(self, OPTIONS["ASCI_BRIGHT"], "Select asci mode", self.is_asci_char_mode)
-        # self.set_asci_shift = SetAsciShift(self, self.is_asci_char_mode) # Todo add SetAsciShift class
+        self.set_asci_shift_spinbox = CustomSpinBox(self, self.max_asci_shift, 0, "Set asci shift", self.is_asci_char_mode)
         self.select_color_mode = RadioButtons(self, OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
         self.select_8_bit_mode = RadioButtons(self, OPTIONS["8_BIT_COLOR"], "Select 8 bit mode", self.is_8_bit_mode)
 
@@ -38,6 +39,7 @@ class App(Frame):
         self.select_action_radio.get().trace("wr", self.select_action_radio_trace)
         self.select_char_mode.get().trace("wr", self.select_char_mode_trace)
         self.select_color_mode.get().trace("wr", self.select_color_mode_trace)
+        self.select_asci_mode.get().trace("wr", self.select_asci_mode_trace)
 
         # Print widgets
         self.choose_photo_button.pack()
@@ -46,13 +48,9 @@ class App(Frame):
         self.select_char_mode.pack()
         self.set_text_string.pack()
         self.select_asci_mode.pack()
-        # self.set_asci_shift.pack()
+        self.set_asci_shift_spinbox.pack()
         self.select_color_mode.pack()
         self.select_8_bit_mode.pack()
-
-        # Just a tests
-        self.test_btn = Button(self, text='test', state=NORMAL, command=self.test)
-        self.test_btn.pack()
 
     # Listeners
     def photo_path_trace(self, *args):
@@ -88,11 +86,8 @@ class App(Frame):
         else:
             self.is_8_bit_mode.set(False)
 
-    # Other
-    def test(self):
-        # print(self.is_html_mode.get())
-        print("Text string - ", self.is_need_text_string.get())
-        print("Asci Char mode - ", self.is_asci_char_mode.get())
-        print("8 bit mode - ", self.is_8_bit_mode.get())
-        print("Text string - ", self.set_text_string.get_value())
-        # print(self.select_action_radio_buttons.get())
+    def select_asci_mode_trace(self, *args):
+        if self.select_asci_mode.get_value() in ["10_grey_level", "reverse_10_grey_level"]:
+            self.max_asci_shift.set(10)
+        elif self.select_asci_mode.get_value() in ["70_grey_level", "reverse_70_grey_level"]:
+            self.max_asci_shift.set(70)
