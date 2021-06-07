@@ -1,12 +1,13 @@
 from tkinter import *
 from .ChoosePhotoButton import ChoosePhotoButton
-from .SetRowSizeSpinbox import SetRowSize
+from .CustomSpinBox import CustomSpinBox
 from .RadioButtons import RadioButtons
 from options import OPTIONS
 from .SetTextString import SetTextString
+from PIL import Image
 
 class App(Frame):
-    source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
+    source_path = image = width_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
         = color_mode = eight_bit_color_mode = column_size = output_path = None
 
     def __init__(self, main_logic):
@@ -19,13 +20,14 @@ class App(Frame):
         self.is_need_text_string = BooleanVar(None, False)  # True if char_mode is random or next strings
         self.is_asci_char_mode = BooleanVar(None, False)
         self.is_8_bit_mode = BooleanVar(None, False)
+        self.width_size = IntVar(None)
 
         # Create widgets
         self.choose_photo_button = ChoosePhotoButton(self)
-        self.set_row_size_spinbox = SetRowSize(self, self.choose_photo_button.get(), self.is_photo_chosen)
+        self.set_row_size_spinbox = CustomSpinBox(self, self.width_size, 1, "Chose output width: ", self.is_photo_chosen)
         self.select_action_radio = RadioButtons(self, OPTIONS["ACTION"], "Select action", self.is_photo_chosen)
         self.select_char_mode = RadioButtons(self, OPTIONS["CHAR_MODE"], "Select char mode", self.is_html_mode)
-        self.set_text_string = SetTextString(self, "Entry text: ",self.is_need_text_string)
+        self.set_text_string = SetTextString(self, "Entry text: ", self.is_need_text_string)
         self.select_asci_mode = RadioButtons(self, OPTIONS["ASCI_BRIGHT"], "Select asci mode", self.is_asci_char_mode)
         # self.set_asci_shift = SetAsciShift(self, self.is_asci_char_mode) # Todo add SetAsciShift class
         self.select_color_mode = RadioButtons(self, OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
@@ -56,6 +58,8 @@ class App(Frame):
     def photo_path_trace(self, *args):
         if self.choose_photo_button.get_value():
             self.is_photo_chosen.set(True)
+            photo_width = Image.open(self.choose_photo_button.get_value()).width
+            self.width_size.set(photo_width)
         else:
             self.is_photo_chosen.set(False)
 

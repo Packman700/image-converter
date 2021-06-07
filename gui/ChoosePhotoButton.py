@@ -12,10 +12,8 @@ class ChoosePhotoButton(Frame):
 
     def select_file(self):
         IMG_FORMATS = ".png .bmp .gif .jpg .jpeg .tff .tiff .eps"
-        print(self.file_name.get())
         path_to_photo = askopenfilename(filetypes=[("Image files", IMG_FORMATS)])
         self.file_name.set(path_to_photo)
-        print(self.file_name.get())
 
     def get_value(self):
         return self.file_name.get()

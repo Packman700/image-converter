@@ -3,9 +3,9 @@ import math
 class PhotoAverageRgbList:
     def __init__(self, settings):
         img_width = settings.image.width
-        char_pixel_size = img_width / settings.row_size
+        char_pixel_size = img_width / settings.width_size
 
-        bright_correction = self._calculate_bright_correction(img_width, settings.row_size)
+        bright_correction = self._calculate_bright_correction(img_width, settings.width_size)
         char_pixel_field = char_pixel_size ** 2 - bright_correction  # approximate number of pixels
 
         img_rgb_2d_list = self._convert_to_2d_array(list(settings.image.getdata()), img_width)  # TAKE DATA FROM PICTURE
@@ -35,7 +35,7 @@ class PhotoAverageRgbList:
         for x in range(settings.column_size):
             x_start_index = math.floor(x * char_pixel_size)
             rows = img_rgb_2d_list[x_start_index: math.floor(x_start_index + char_pixel_size)]
-            for y in range(settings.row_size):
+            for y in range(settings.width_size):
                 y_start_index = math.floor(y * char_pixel_size)
 
                 # COUNT AVERAGE PIXEL SIZE VALUES

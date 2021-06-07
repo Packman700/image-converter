@@ -17,7 +17,7 @@ class PresentData:
         char_gen = self.char_services.char_generator(settings.text_string)
         with open(settings.output_path, "w") as file:
             current_char = None
-            for i in range(1, settings.row_size * settings.column_size):
+            for i in range(1, settings.width_size * settings.column_size):
                 current_color = photo_rgb_list[i]
 
                 if settings.char_mode == "next_characters":
@@ -29,12 +29,12 @@ class PresentData:
 
                 styled_spans += self.char_services.return_span_tag(current_color, current_char)
 
-                if i % settings.row_size == 0 and i != 0:
+                if i % settings.width_size == 0 and i != 0:
                     styled_spans += "\n"
 
             file.write(HTML_TEMPLATE.format(styled_spans))
 
     def generate_img_file(self, my_image, settings):
-        new_image = Image.new(mode="RGB", size=(settings.row_size, settings.column_size))
+        new_image = Image.new(mode="RGB", size=(settings.width_size, settings.column_size))
         new_image.putdata(my_image)
         new_image.save(settings.output_path)
