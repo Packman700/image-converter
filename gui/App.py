@@ -3,6 +3,7 @@ from .ChoosePhotoButton import ChoosePhotoButton
 from .SetRowSizeSpinbox import SetRowSize
 from .RadioButtons import RadioButtons
 from options import OPTIONS
+from .SetTextString import SetTextString
 
 class App(Frame):
     source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
@@ -24,7 +25,7 @@ class App(Frame):
         self.set_row_size_spinbox = SetRowSize(self, self.choose_photo_button.get(), self.is_photo_chosen)
         self.select_action_radio = RadioButtons(self, OPTIONS["ACTION"], "Select action", self.is_photo_chosen)
         self.select_char_mode = RadioButtons(self, OPTIONS["CHAR_MODE"], "Select char mode", self.is_html_mode)
-        # self.set_text_string = SetTextString(self, self.is_need_text_string) # Todo add SetTextString class
+        self.set_text_string = SetTextString(self, "Entry text: ",self.is_need_text_string)
         self.select_asci_mode = RadioButtons(self, OPTIONS["ASCI_BRIGHT"], "Select asci mode", self.is_asci_char_mode)
         # self.set_asci_shift = SetAsciShift(self, self.is_asci_char_mode) # Todo add SetAsciShift class
         self.select_color_mode = RadioButtons(self, OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
@@ -41,7 +42,7 @@ class App(Frame):
         self.select_action_radio.pack()
         self.set_row_size_spinbox.pack()
         self.select_char_mode.pack()
-        # self.set_text_string.pack()
+        self.set_text_string.pack()
         self.select_asci_mode.pack()
         # self.set_asci_shift.pack()
         self.select_color_mode.pack()
@@ -68,7 +69,7 @@ class App(Frame):
         if not self.is_html_mode.get():
             self.is_need_text_string.set(False)
             self.is_asci_char_mode.set(False)
-        if self.select_char_mode.get_value() in ["next_characters", "random_characters"]:
+        elif self.select_char_mode.get_value() in ["next_characters", "random_characters"]:
             self.is_need_text_string.set(True)
             self.is_asci_char_mode.set(False)
         else:
@@ -89,4 +90,5 @@ class App(Frame):
         print("Text string - ", self.is_need_text_string.get())
         print("Asci Char mode - ", self.is_asci_char_mode.get())
         print("8 bit mode - ", self.is_8_bit_mode.get())
+        print("Text string - ", self.set_text_string.get_value())
         # print(self.select_action_radio_buttons.get())
