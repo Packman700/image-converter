@@ -1,16 +1,19 @@
 from tkinter import *
+from tkinter.filedialog import (asksaveasfilename)
 from .ChoosePhotoButton import ChoosePhotoButton
+from .GenerateFileButton import GenerateFileButton
 from .CustomSpinBox import CustomSpinBox
 from .RadioButtons import RadioButtons
 from options import OPTIONS
 from .SetTextString import SetTextString
 from PIL import Image
 
-class App(Frame):
-    # source_path = image = width_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
-    #     = color_mode = eight_bit_color_mode = column_size = output_path = None
+from procedures.Settings import Settings
+from MyImage import MyImage
+from procedures.PresentData import PresentData
 
-    def __init__(self, main_logic):
+class App(Frame):
+    def __init__(self):
         super().__init__()
         self.pack()
 
@@ -34,6 +37,8 @@ class App(Frame):
         self.select_color_mode = RadioButtons(self, OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
         self.select_8_bit_mode = RadioButtons(self, OPTIONS["8_BIT_COLOR"], "Select 8 bit mode", self.is_8_bit_mode)
 
+        self.generate_picture_button = GenerateFileButton(self, self.main_logic,"Generate picture", self.is_photo_chosen)
+
         # Create widget variables listeners
         self.choose_photo_button.get().trace("wr", self.photo_path_trace)
         self.select_action_radio.get().trace("wr", self.select_action_radio_trace)
@@ -51,6 +56,7 @@ class App(Frame):
         self.set_asci_shift_spinbox.pack()
         self.select_color_mode.pack()
         self.select_8_bit_mode.pack()
+        self.generate_picture_button.pack()
 
     # Listeners
     def photo_path_trace(self, *args):
@@ -91,3 +97,39 @@ class App(Frame):
             self.max_asci_shift.set(10)
         elif self.select_asci_mode.get_value() in ["70_grey_level", "reverse_70_grey_level"]:
             self.max_asci_shift.set(70)
+
+    # Other
+    def main_logic(self):
+        gui_settings = {
+            "source_path": self.choose_photo_button.get_value(),
+            "row_size": int(self.set_row_size_spinbox.get_value()),
+            "action": self.select_action_radio.get_value(),
+            "char_mode": None, "text_string": None,
+            "asci_bright_mode": None, "asci_shift": None,
+            "color_mode": None, "eight_bit_color_mode": None,
+            "output_path": None,
+        }
+
+        if self.is_html_mode.get():
+            gui_settings["char_mode"] = self.select_char_mode.get_value()
+            if self.is_need_text_string.get():
+                gui_settings["text_string"] = self.set_text_string.get_value()
+            elif self.is_asci_char_mode.get():
+                gui_settings["asci_bright_mode"] = self.select_asci_mode.get_value()
+                gui_settings["asci_shift"] = int(self.set_asci_shift_spinbox.get_value())
+            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Html file", ".html")], defaultextension=".html")
+        else:
+            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Image files", ".png")], defaultextension=".png")
+
+        gui_settings["color_mode"] = self.select_color_mode.get_value()
+        if self.is_8_bit_mode.get():
+            gui_settings["eight_bit_color_mode"] = self.select_8_bit_mode.get_value()
+
+        # Todo covert settings from Tkinter to default settings format
+        # Set settings
+        settings = Settings()
+        settings.gui_mode_set_settings(gui_settings)
+        # Main logic
+        my_image = MyImage(settings)
+        # Format and display data
+        PresentData(my_image, settings)

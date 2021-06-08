@@ -56,4 +56,7 @@ class CustomSpinBox(Frame):
 
     # Other
     def get(self):
+        return self.spinbox
+
+    def get_value(self):
         return self.spinbox.get()

@@ -5,11 +5,22 @@ from options import OPTIONS
 
 class Settings:
     # DECLARATION OF ALL OPTIONS
-    source_path = image = row_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
+    source_path = image = width_size = action = char_mode = text_string = asci_bright_mode = asci_shift \
          = color_mode = eight_bit_color_mode = column_size = output_path = None
 
-    def gui_mode_set_settings(self):
-        pass
+    def gui_mode_set_settings(self, gui_settings):
+        self.source_path = gui_settings["source_path"]
+        self.width_size = gui_settings["row_size"]
+        self.action = gui_settings["action"]
+        self.char_mode = gui_settings["char_mode"]
+        self.text_string = gui_settings["text_string"]
+        self.asci_bright_mode = gui_settings["asci_bright_mode"]
+        self.asci_shift = gui_settings["asci_shift"]
+        self.color_mode = gui_settings["color_mode"]
+        self.eight_bit_color_mode = gui_settings["eight_bit_color_mode"]
+        self.output_path = gui_settings["output_path"]
+        self.image = Image.open(gui_settings["source_path"])
+        self.column_size = (self.image.height * self.width_size) // self.image.width
 
     def text_mode_set_settings(self):
         select_menu = TextModeSelectMenu()
@@ -102,7 +113,7 @@ class Settings:
                 print("Row size must be integer")
                 continue
 
-            self.row_size = int(row_size)
+            self.width_size = int(row_size)
             break
 
     def set_asci_shift(self):
