@@ -3,8 +3,9 @@ from tkinter import *
 class RadioButtons(Frame):
     def __init__(self, parent, options, text_label, is_enable):
         super().__init__(parent)
-
         # Set variables
+        # desiredWidth = self.winfo_vrootwidth()
+        # print(desiredWidth)
         self.is_enable = is_enable
         self.chosen_option = StringVar(None, list(options.values())[0])
         self.radio_buttons = []
@@ -16,12 +17,12 @@ class RadioButtons(Frame):
         label = Label(self, text=text_label)
         for (name, value) in options.items():
             button = Radiobutton(self, value=value, text=name, variable=self.chosen_option,
-                                 state=DISABLED)
+                                 state=DISABLED, anchor="w")#, width=desiredWidth) # anchor = "w"
             self.radio_buttons.append(button)
 
         # Print widgets
         label.pack()
-        list(map(lambda button: button.pack(), self.radio_buttons))
+        list(map(lambda button: button.pack(fill=X), self.radio_buttons))
 
     # Listeners
     def is_enable_trace(self, *args):

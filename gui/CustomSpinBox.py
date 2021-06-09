@@ -23,7 +23,7 @@ class CustomSpinBox(Frame):
         self.label = Label(self, text=label_text)
 
         # Print widgets
-        self.spinbox.grid(row=0, column=1)
+        self.spinbox.grid(row=1, column=0)
         self.label.grid(row=0, column=0)
 
     # Listeners

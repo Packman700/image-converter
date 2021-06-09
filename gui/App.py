@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.filedialog import (asksaveasfilename)
+from .MyLabelFrame import MyLabelFrame
 from .ChoosePhotoButton import ChoosePhotoButton
 from .GenerateFileButton import GenerateFileButton
 from .CustomSpinBox import CustomSpinBox
@@ -27,17 +28,25 @@ class App(Frame):
         self.max_asci_shift = IntVar(None)
 
         # Create widgets
+        ### GENERAL SETTINGS ###
         self.choose_photo_button = ChoosePhotoButton(self)
-        self.set_row_size_spinbox = CustomSpinBox(self, self.width_size, 1, "Chose output width: ", self.is_photo_chosen)
-        self.select_action_radio = RadioButtons(self, OPTIONS["ACTION"], "Select action", self.is_photo_chosen)
-        self.select_char_mode = RadioButtons(self, OPTIONS["CHAR_MODE"], "Select char mode", self.is_html_mode)
-        self.set_text_string = SetTextString(self, "Entry text: ", self.is_need_text_string)
-        self.select_asci_mode = RadioButtons(self, OPTIONS["ASCI_BRIGHT"], "Select asci mode", self.is_asci_char_mode)
-        self.set_asci_shift_spinbox = CustomSpinBox(self, self.max_asci_shift, 0, "Set asci shift", self.is_asci_char_mode)
-        self.select_color_mode = RadioButtons(self, OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
-        self.select_8_bit_mode = RadioButtons(self, OPTIONS["8_BIT_COLOR"], "Select 8 bit mode", self.is_8_bit_mode)
 
-        self.generate_picture_button = GenerateFileButton(self, self.main_logic,"Generate picture", self.is_photo_chosen)
+        general_settings_frame = MyLabelFrame(self, "General Settings")
+        self.set_row_size_spinbox = CustomSpinBox(general_settings_frame.get(), self.width_size, 1, "Chose output width: ", self.is_photo_chosen)
+        self.select_action_radio = RadioButtons(general_settings_frame.get(), OPTIONS["ACTION"], "Select action", self.is_photo_chosen)
+        ### HTML SETTINGS ###
+        html_settings_frame = MyLabelFrame(self, "Html Settings")
+        self.select_char_mode = RadioButtons(html_settings_frame.get(), OPTIONS["CHAR_MODE"], "Select char mode", self.is_html_mode)
+        self.set_text_string = SetTextString(html_settings_frame.get(), "Entry text: ", self.is_need_text_string)
+        self.select_asci_mode = RadioButtons(html_settings_frame.get(), OPTIONS["ASCI_BRIGHT"], "Select asci mode", self.is_asci_char_mode)
+        self.set_asci_shift_spinbox = CustomSpinBox(html_settings_frame.get(), self.max_asci_shift, 0, "Set asci shift", self.is_asci_char_mode)
+
+        ### COLOR SETTINGS ###
+        color_settings_frame = MyLabelFrame(self, "Html Color")
+        self.select_color_mode = RadioButtons(color_settings_frame.get(), OPTIONS["COLOR_MODE"], "Select color mode", self.is_photo_chosen)
+        self.select_8_bit_mode = RadioButtons(color_settings_frame.get(), OPTIONS["8_BIT_COLOR"], "Select 8 bit mode", self.is_8_bit_mode)
+
+        self.generate_picture_button = GenerateFileButton(self, self.main_logic, "Generate picture", self.is_photo_chosen)
 
         # Create widget variables listeners
         self.choose_photo_button.get().trace("wr", self.photo_path_trace)
@@ -47,17 +56,26 @@ class App(Frame):
         self.select_asci_mode.get().trace("wr", self.select_asci_mode_trace)
 
         # Print widgets
-        self.choose_photo_button.pack()
+        self.choose_photo_button.grid(row=1, column=0, sticky="ew")
+
+        general_settings_frame.grid(row=2, column=0, sticky="ns")
         self.select_action_radio.pack()
         self.set_row_size_spinbox.pack()
-        self.select_char_mode.pack()
-        self.set_text_string.pack()
-        self.select_asci_mode.pack()
-        self.set_asci_shift_spinbox.pack()
+
+        html_settings_frame.grid(row=3, column=0, columnspan=2, sticky="ew")
+        self.select_char_mode.grid(row=0, column=0)
+        self.set_text_string.grid(row=1, column=0)
+        self.select_asci_mode.grid(row=0, column=1)
+        self.set_asci_shift_spinbox.grid(row=1, column=1)
+
+        color_settings_frame.grid(row=1, rowspan=2, column=1, sticky="ns")
         self.select_color_mode.pack()
         self.select_8_bit_mode.pack()
-        self.generate_picture_button.pack()
 
+        self.generate_picture_button.grid(row=4, column=1, sticky="e")
+
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
     # Listeners
     def photo_path_trace(self, *args):
         if self.choose_photo_button.get_value():
@@ -117,9 +135,11 @@ class App(Frame):
             elif self.is_asci_char_mode.get():
                 gui_settings["asci_bright_mode"] = self.select_asci_mode.get_value()
                 gui_settings["asci_shift"] = int(self.set_asci_shift_spinbox.get_value())
-            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Html file", ".html")], defaultextension=".html")
+            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Html file", ".html")],
+                                                            defaultextension=".html")
         else:
-            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Image files", ".png")], defaultextension=".png")
+            gui_settings["output_path"] = asksaveasfilename(filetypes=[("Image files", ".png")],
+                                                            defaultextension=".png")
 
         gui_settings["color_mode"] = self.select_color_mode.get_value()
         if self.is_8_bit_mode.get():
