@@ -1,21 +1,26 @@
-## Examlpe outputs
-**Orginal Photo**
+## Project scope
+This project allow to change any image to pixelated form or generate a html file with colored spans that make up to image
 
-![Mana Lisa](/MonaLisa.jpg?raw=true "Mana Lisa")
+## Instalation
+- Python 3.9 or newer
+- Install Pillow to your env by run ```pip install Pillow```
+- Afret prepare prepare env you can run one of this files:
+  - ```gui_app.py```
+  - ```console_app.py```
 
+## Examlpes
+### **Orginal Photo**
 
-### **Colored Strings**
-Here i create image using "hello-world-" string
+![Mona Lisa](/program-examples/MonaLisa.jpg?raw=true "Mana Lisa")
 
-![colored strings](/program-examples/colored_strings.png?raw=true "colored strings")
+### **HTML rgb asci**
+![HTML rgb asci](/program-examples/html_rgb_asci.png?raw=true "colored strings")
 
-### **Random Colored String**
-Here i create image using "10" string in random order
+### **HTML 8bit low green random string**
+![HTML 8bit low green random string](/program-examples/html_8bit_low_green_random_string.png?raw=true "random colored string")
 
-![random colored string](/program-examples/random_numbers.png?raw=true "random colored string")
+### **IMG grayscale**
+![IMG grayscale](/program-examples/img_grayscale.png?raw=true "gray chars")
 
-### **Gray Scale**
-This is exaple how look picture in grayscale 
-
-![gray chars](/program-examples/gray_chars.png?raw=true "gray chars")
-
+### **IMG 8bit low blue**
+![IMG 8bit low blue](/program-examples/img_8bit_low_blue.png?raw=true "gray chars")

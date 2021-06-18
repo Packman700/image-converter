@@ -1,5 +1,3 @@
-
-
 from gui.App import App
 from tkinter import Tk
 
