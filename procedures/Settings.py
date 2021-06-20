@@ -60,6 +60,9 @@ class Settings:
             except Image.UnidentifiedImageError:
                 print("Selected file isn't image")
                 continue
+            except IsADirectory:
+                print("Please give also file name")
+                continue
 
             self.source_path = source_path
             break
